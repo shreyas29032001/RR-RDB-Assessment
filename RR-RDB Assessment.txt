@@ -1,0 +1,65 @@
+select * from users;
+SELECT * from progress;
+-- What are the Top 25 schools (.edu domains)?
+SELECT email_domain, COUNT(*) AS total_learners
+FROM users
+WHERE email_domain LIKE '%.edu'
+GROUP BY email_domain
+ORDER BY total_learners DESC
+LIMIT 25;
+
+-- How many .edu learners are located in New York?
+select count(*) from users where email_domain 
+like '%.edu' and country ='New York';
+
+-- Count of learners using the mobile app
+SELECT COUNT(*) AS mobile_app_users
+FROM users
+WHERE mobile_app = 'mobile-user';
+
+
+SELECT strftime('%H', sign_up_at) AS signup_hour, COUNT(*) AS signup_count
+FROM users
+GROUP BY signup_hour
+ORDER BY signup_hour;
+
+
+SELECT 
+  email_domain,
+  AVG(learn_cpp) AS avg_cpp,
+  AVG(learn_sql) AS avg_sql,
+  AVG(learn_html) AS avg_html,
+  AVG(learn_javascript) AS avg_javascript,
+  AVG(learn_java) AS avg_java
+FROM users
+JOIN progress
+  ON users.user_id = progress.user_id
+WHERE email_domain LIKE '%.edu'
+GROUP BY email_domain
+ORDER BY email_domain;
+
+
+SELECT 
+  AVG(learn_cpp) AS avg_cpp,
+  AVG(learn_sql) AS avg_sql,
+  AVG(learn_html) AS avg_html,
+  AVG(learn_javascript) AS avg_javascript,
+  AVG(learn_java) AS avg_java
+FROM users
+JOIN progress
+  ON users.user_id = progress.user_id
+WHERE country = 'New York';
+
+
+SELECT 
+  AVG(learn_cpp) AS avg_cpp,
+  AVG(learn_sql) AS avg_sql,
+  AVG(learn_html) AS avg_html,
+  AVG(learn_javascript) AS avg_javascript,
+  AVG(learn_java) AS avg_java
+FROM users
+JOIN progress
+  ON users.user_id = progress.user_id
+WHERE country = 'Chicago';
+
+
